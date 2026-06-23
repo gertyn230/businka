@@ -1,145 +1,207 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>💖 Для тебе</title>
+<meta charset="UTF-8">
+<title>💖 For You</title>
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: radial-gradient(circle, #ff4d6d, #c9184a);
-      color: white;
-    }
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  color: white;
+  background: black;
+}
 
-    h1 {
-      margin-top: 15vh;
-      font-size: 3em;
-      text-shadow: 0 0 20px black;
-    }
+/* 🌌 ЗОРЯНИЙ ФОН */
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 0;
+}
 
-    #text {
-      font-size: 1.8em;
-      margin-top: 20px;
-      transition: 0.5s;
-    }
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
 
-    button {
-      margin: 10px;
-      padding: 12px 22px;
-      border: none;
-      border-radius: 20px;
-      font-size: 1.1em;
-      cursor: pointer;
-      background: white;
-      color: #c9184a;
-      font-weight: bold;
-    }
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
 
-    button:hover {
-      transform: scale(1.05);
-    }
+/* 💖 UI */
+.container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  top: 10vh;
+}
 
-    .heart {
-      position: absolute;
-      color: #fff;
-      font-size: 20px;
-      animation: fall linear forwards;
-    }
+h1 {
+  font-size: 3em;
+  text-shadow: 0 0 20px pink;
+}
 
-    @keyframes fall {
-      from { transform: translateY(-10vh); opacity: 1; }
-      to { transform: translateY(110vh); opacity: 0; }
-    }
+#msg {
+  font-size: 1.6em;
+  margin-top: 20px;
+}
 
-    #photo {
-      margin-top: 20px;
-      width: 200px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px black;
-      display: none;
-    }
+/* 🧊 glass блок */
+.panel {
+  margin: 20px auto;
+  width: 300px;
+  padding: 15px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+}
 
-    #buttons {
-      margin-top: 20px;
-    }
-  </style>
+/* кнопки */
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pink { background: #ff4d6d; color: white; }
+.white { background: white; color: #ff4d6d; }
+
+/* 💖 сердечка */
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: fall 4s linear forwards;
+}
+
+@keyframes fall {
+  from { transform: translateY(-10vh); opacity: 1; }
+  to { transform: translateY(110vh); opacity: 0; }
+}
+
+/* 💬 чат */
+.chat {
+  margin-top: 20px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.msg {
+  margin: 5px 0;
+  padding: 5px 10px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+}
+</style>
 </head>
 
 <body>
 
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
 <h1>💖 Для тебе 💖</h1>
+<div id="msg">Ти найкраща 💕</div>
 
-<div id="text">Ти найкраща 💕</div>
-
-<div id="buttons">
-  <button onclick="showLove()">💌 Сюрприз</button>
-  <button onclick="toggleMusic()">🎵 Музика</button>
+<div class="panel">
+  <button class="pink" onclick="loveBoom()">💌 Я тебе люблю</button>
+  <button class="white" onclick="toggleMusic()">🎵 Музика</button>
 </div>
 
-<img id="photo" src="https://i.imgur.com/1Q9Z1Zm.jpg">
+<div class="panel chat" id="chat">
+  <div class="msg">💬 ти: привіт ❤️</div>
+  <div class="msg">💖 я: ти найкраща у світі</div>
+</div>
+
+</div>
 
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8c5d5b3.mp3?filename=romantic-110397.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8c5d5b3.mp3?filename=romantic-110397.mp3">
 </audio>
 
 <script>
+
+/* 🌌 зірки */
+for (let i = 0; i < 120; i++) {
+  let s = document.createElement("div");
+  s.className = "star";
+  s.style.left = Math.random()*100+"vw";
+  s.style.top = Math.random()*100+"vh";
+  s.style.animationDuration = (1+Math.random()*3)+"s";
+  document.getElementById("stars").appendChild(s);
+}
+
+/* 💬 змінні компліменти */
 const messages = [
   "Ти найкраща 💕",
-  "Ти дуже красива 😍",
-  "Я тебе дуже ціную 💖",
+  "Ти як сонце ☀️",
   "Ти моє щастя ✨",
-  "Бусінка ти наймиліша 🥰",
-  "З тобою світ кращий 🌸"
+  "Я тебе ціную 💖",
+  "Ти неймовірна 😍"
 ];
 
 let i = 0;
 setInterval(() => {
   i = (i + 1) % messages.length;
-  document.getElementById("text").innerText = messages[i];
+  document.getElementById("msg").innerText = messages[i];
 }, 2500);
 
-// 💖 сердечка
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerText = "💖";
-
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (2 + Math.random() * 3) + "s";
-  heart.style.fontSize = (10 + Math.random() * 25) + "px";
-
-  document.body.appendChild(heart);
-
-  setTimeout(() => heart.remove(), 5000);
-}
-setInterval(createHeart, 150);
-
-// 💌 сюрприз
-function showLove() {
-  alert("💖 Ти найцінніша людина 💖");
-  document.getElementById("photo").style.display = "block";
+/* 💖 сердечка */
+function heart(x, y) {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerText = "💖";
+  h.style.left = x + "px";
+  h.style.top = y + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 4000);
 }
 
-// 🎵 музика (FIX для браузера)
-let musicPlaying = false;
+/* 💥 вибух сердечок */
+function loveBoom() {
+  for (let i = 0; i < 30; i++) {
+    setTimeout(() => {
+      heart(
+        window.innerWidth/2 + (Math.random()*200-100),
+        window.innerHeight/2 + (Math.random()*200-100)
+      );
+    }, i*50);
+  }
+
+  let chat = document.getElementById("chat");
+  let m = document.createElement("div");
+  m.className = "msg";
+  m.innerText = "💖 система: тебе дуже люблять 💖";
+  chat.appendChild(m);
+}
+
+/* 🎵 музика */
+let playing = false;
 
 function toggleMusic() {
-  const music = document.getElementById("music");
+  let music = document.getElementById("music");
 
-  if (!musicPlaying) {
-    music.play().then(() => {
-      musicPlaying = true;
-    }).catch(() => {
-      alert("Натисни ще раз, браузер блокує звук 💖");
-    });
+  if (!playing) {
+    music.play().then(() => playing = true);
   } else {
     music.pause();
-    musicPlaying = false;
+    playing = false;
   }
 }
+
 </script>
 
 </body>
