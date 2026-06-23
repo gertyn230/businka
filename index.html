@@ -2,23 +2,22 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<title>💖 For You</title>
+<title>💖 Для тебе</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
-  font-family: Arial, sans-serif;
-  color: white;
+  font-family: Arial;
   background: black;
+  color: white;
 }
 
-/* 🌌 ЗОРЯНИЙ ФОН */
-.stars {
+/* 🌌 зорі */
+#stars {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: black;
   z-index: 0;
 }
 
@@ -28,21 +27,21 @@ body {
   height: 2px;
   background: white;
   border-radius: 50%;
-  animation: twinkle 2s infinite;
+  animation: blink 2s infinite;
 }
 
-@keyframes twinkle {
-  0% { opacity: 0.2; }
-  50% { opacity: 1; }
-  100% { opacity: 0.2; }
+@keyframes blink {
+  0% {opacity:0.2;}
+  50% {opacity:1;}
+  100% {opacity:0.2;}
 }
 
-/* 💖 UI */
+/* основний контент */
 .container {
   position: relative;
   z-index: 2;
   text-align: center;
-  top: 10vh;
+  top: 8vh;
 }
 
 h1 {
@@ -52,17 +51,7 @@ h1 {
 
 #msg {
   font-size: 1.6em;
-  margin-top: 20px;
-}
-
-/* 🧊 glass блок */
-.panel {
-  margin: 20px auto;
-  width: 300px;
-  padding: 15px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
+  margin: 15px;
 }
 
 /* кнопки */
@@ -78,7 +67,16 @@ button {
 .pink { background: #ff4d6d; color: white; }
 .white { background: white; color: #ff4d6d; }
 
-/* 💖 сердечка */
+/* фото */
+#slider {
+  width: 280px;
+  border-radius: 20px;
+  margin-top: 10px;
+  transition: 0.5s;
+  box-shadow: 0 0 20px #ff4d6d;
+}
+
+/* сердечка */
 .heart {
   position: absolute;
   color: #ff4d6d;
@@ -87,70 +85,74 @@ button {
 }
 
 @keyframes fall {
-  from { transform: translateY(-10vh); opacity: 1; }
-  to { transform: translateY(110vh); opacity: 0; }
+  from { transform: translateY(-10vh); opacity:1; }
+  to { transform: translateY(110vh); opacity:0; }
 }
 
-/* 💬 чат */
+/* чат */
 .chat {
-  margin-top: 20px;
-  text-align: left;
-  font-size: 14px;
+  margin-top: 15px;
+  background: rgba(255,255,255,0.1);
+  padding: 10px;
+  border-radius: 15px;
+  width: 280px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .msg {
+  font-size: 13px;
   margin: 5px 0;
-  padding: 5px 10px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="stars" id="stars"></div>
+<div id="stars"></div>
 
 <div class="container">
 
 <h1>💖 Для тебе 💖</h1>
+
 <div id="msg">Ти найкраща 💕</div>
 
-<div class="panel">
-  <button class="pink" onclick="loveBoom()">💌 Я тебе люблю</button>
-  <button class="white" onclick="toggleMusic()">🎵 Музика</button>
-</div>
+<img id="slider" src="images/1.jpg">
 
-<div class="panel chat" id="chat">
+<br>
+
+<button class="pink" onclick="loveBoom()">💌 Я тебе люблю</button>
+<button class="white" onclick="toggleMusic()">🎵 Музика</button>
+
+<div class="chat" id="chat">
   <div class="msg">💬 ти: привіт ❤️</div>
-  <div class="msg">💖 я: ти найкраща у світі</div>
+  <div class="msg">💖 я: ти найкраща</div>
 </div>
 
 </div>
 
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8c5d5b3.mp3?filename=romantic-110397.mp3">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8c5d5b3.mp3">
 </audio>
 
 <script>
 
-/* 🌌 зірки */
+/* 🌌 зорі */
 for (let i = 0; i < 120; i++) {
   let s = document.createElement("div");
   s.className = "star";
   s.style.left = Math.random()*100+"vw";
   s.style.top = Math.random()*100+"vh";
-  s.style.animationDuration = (1+Math.random()*3)+"s";
   document.getElementById("stars").appendChild(s);
 }
 
-/* 💬 змінні компліменти */
+/* 💬 компліменти */
 const messages = [
   "Ти найкраща 💕",
-  "Ти як сонце ☀️",
-  "Ти моє щастя ✨",
+  "Ти моє сонце ☀️",
+  "Ти неймовірна 😍",
   "Я тебе ціную 💖",
-  "Ти неймовірна 😍"
+  "Ти моє щастя ✨"
 ];
 
 let i = 0;
@@ -158,6 +160,27 @@ setInterval(() => {
   i = (i + 1) % messages.length;
   document.getElementById("msg").innerText = messages[i];
 }, 2500);
+
+/* 📸 слайдер фото */
+const photos = [
+  "images/1.jpg",
+  "images/2.jpg",
+  "images/3.jpg",
+  "images/4.jpg"
+];
+
+let p = 0;
+
+setInterval(() => {
+  p = (p + 1) % photos.length;
+  document.getElementById("slider").style.opacity = 0;
+
+  setTimeout(() => {
+    document.getElementById("slider").src = photos[p];
+    document.getElementById("slider").style.opacity = 1;
+  }, 300);
+
+}, 3000);
 
 /* 💖 сердечка */
 function heart(x, y) {
@@ -170,15 +193,15 @@ function heart(x, y) {
   setTimeout(() => h.remove(), 4000);
 }
 
-/* 💥 вибух сердечок */
+/* 💥 любовний вибух */
 function loveBoom() {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 40; i++) {
     setTimeout(() => {
       heart(
-        window.innerWidth/2 + (Math.random()*200-100),
-        window.innerHeight/2 + (Math.random()*200-100)
+        window.innerWidth/2 + (Math.random()*300-150),
+        window.innerHeight/2 + (Math.random()*300-150)
       );
-    }, i*50);
+    }, i*40);
   }
 
   let chat = document.getElementById("chat");
