@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>💖 Для тебе</title>
+
   <style>
     body {
       margin: 0;
       overflow: hidden;
-      background: linear-gradient(120deg, #ff4d6d, #ff8fa3, #ffc2d1);
       font-family: Arial, sans-serif;
-      color: white;
       text-align: center;
+      background: radial-gradient(circle, #ff4d6d, #c9184a);
+      color: white;
     }
 
     h1 {
-      margin-top: 20vh;
+      margin-top: 15vh;
       font-size: 3em;
-      text-shadow: 0 0 20px rgba(0,0,0,0.3);
+      text-shadow: 0 0 20px black;
     }
 
     #text {
@@ -25,63 +26,104 @@
       transition: 0.5s;
     }
 
+    button {
+      margin-top: 30px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      background: white;
+      color: #c9184a;
+    }
+
     .heart {
       position: absolute;
-      color: white;
+      color: #fff;
       font-size: 20px;
       animation: fall linear forwards;
     }
 
     @keyframes fall {
-      from {
-        transform: translateY(-10vh);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
+      from { transform: translateY(-10vh); opacity: 1; }
+      to { transform: translateY(110vh); opacity: 0; }
+    }
+
+    #photo {
+      margin-top: 20px;
+      width: 180px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px black;
+      display: none;
+    }
+
+    #musicBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
     }
   </style>
 </head>
+
 <body>
 
 <h1>💖 Для тебе 💖</h1>
+
 <div id="text">Ти найкраща 💕</div>
 
+<button onclick="showLove()">Натисни сюрприз 💌</button>
+
+<br>
+<img id="photo" src="https://i.imgur.com/1Q9Z1Zm.jpg" />
+
+<button id="musicBtn" onclick="playMusic()">🎵 Музика</button>
+
+<audio id="music" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
 <script>
-  const messages = [
-    "Ти найкраща 💕",
-    "Ти дуже красива 😍",
-    "Я тебе дуже ціную 💖",
-    "Ти робиш мій день кращим 🌸",
-    "Ти моє щастя ✨",
-    "Бусінка ти наймиліша 🥰"
-  ];
+const messages = [
+  "Ти найкраща 💕",
+  "Ти дуже красива 😍",
+  "Я тебе дуже ціную 💖",
+  "Ти моє щастя ✨",
+  "Бусінка ти наймиліша 🥰",
+  "З тобою світ кращий 🌸"
+];
 
-  let i = 0;
-  setInterval(() => {
-    i = (i + 1) % messages.length;
-    document.getElementById("text").innerText = messages[i];
-  }, 2500);
+let i = 0;
+setInterval(() => {
+  i = (i + 1) % messages.length;
+  document.getElementById("text").innerText = messages[i];
+}, 2500);
 
-  function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerText = "💖";
+// 💖 сердечка
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerText = "💖";
 
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (2 + Math.random() * 3) + "s";
-    heart.style.fontSize = (10 + Math.random() * 20) + "px";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+  heart.style.fontSize = (10 + Math.random() * 25) + "px";
 
-    document.body.appendChild(heart);
+  document.body.appendChild(heart);
 
-    setTimeout(() => {
-      heart.remove();
-    }, 5000);
-  }
+  setTimeout(() => heart.remove(), 5000);
+}
+setInterval(createHeart, 150);
 
-  setInterval(createHeart, 200);
+// 💌 сюрприз
+function showLove() {
+  alert("💖 Ти найважливіша людина 💖");
+  document.getElementById("photo").style.display = "block";
+}
+
+// 🎵 музика
+function playMusic() {
+  document.getElementById("music").play();
+}
 </script>
 
 </body>
