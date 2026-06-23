@@ -13,7 +13,7 @@ body {
   color: white;
 }
 
-/* 🌌 зорі */
+/* зорі */
 #stars {
   position: fixed;
   width: 100%;
@@ -36,7 +36,7 @@ body {
   100% {opacity:0.2;}
 }
 
-/* основний контент */
+/* контент */
 .container {
   position: relative;
   z-index: 2;
@@ -88,22 +88,6 @@ button {
   from { transform: translateY(-10vh); opacity:1; }
   to { transform: translateY(110vh); opacity:0; }
 }
-
-/* чат */
-.chat {
-  margin-top: 15px;
-  background: rgba(255,255,255,0.1);
-  padding: 10px;
-  border-radius: 15px;
-  width: 280px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.msg {
-  font-size: 13px;
-  margin: 5px 0;
-}
 </style>
 </head>
 
@@ -121,23 +105,18 @@ button {
 
 <br>
 
-<button class="pink" onclick="loveBoom()">💌 Я тебе люблю</button>
+<button class="pink" onclick="loveBoom()">💌 Люблю тебе</button>
 <button class="white" onclick="toggleMusic()">🎵 Музика</button>
-
-<div class="chat" id="chat">
-  <div class="msg">💬 ти: привіт ❤️</div>
-  <div class="msg">💖 я: ти найкраща</div>
-</div>
 
 </div>
 
 <audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b8c5d5b3.mp3">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
-/* 🌌 зорі */
+/* зорі */
 for (let i = 0; i < 120; i++) {
   let s = document.createElement("div");
   s.className = "star";
@@ -146,7 +125,7 @@ for (let i = 0; i < 120; i++) {
   document.getElementById("stars").appendChild(s);
 }
 
-/* 💬 компліменти */
+/* компліменти */
 const messages = [
   "Ти найкраща 💕",
   "Ти моє сонце ☀️",
@@ -161,7 +140,7 @@ setInterval(() => {
   document.getElementById("msg").innerText = messages[i];
 }, 2500);
 
-/* 📸 слайдер фото */
+/* слайдер фото */
 const photos = [
   "images/1.jpg",
   "images/2.jpg",
@@ -182,7 +161,7 @@ setInterval(() => {
 
 }, 3000);
 
-/* 💖 сердечка */
+/* сердечка */
 function heart(x, y) {
   const h = document.createElement("div");
   h.className = "heart";
@@ -193,7 +172,7 @@ function heart(x, y) {
   setTimeout(() => h.remove(), 4000);
 }
 
-/* 💥 любовний вибух */
+/* любовний вибух */
 function loveBoom() {
   for (let i = 0; i < 40; i++) {
     setTimeout(() => {
@@ -203,18 +182,19 @@ function loveBoom() {
       );
     }, i*40);
   }
-
-
 }
 
-/* 🎵 музика */
+/* музика */
 let playing = false;
 
 function toggleMusic() {
   let music = document.getElementById("music");
+  music.volume = 0.5;
 
   if (!playing) {
-    music.play().then(() => playing = true);
+    music.play()
+      .then(() => playing = true)
+      .catch(err => console.log("audio error:", err));
   } else {
     music.pause();
     playing = false;
